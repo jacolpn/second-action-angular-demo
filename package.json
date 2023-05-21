@@ -4,12 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "lint": "ng lint",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test --watch=false --browsers ChromeHeadless"
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/build-angular": "^16.0.2",
+    "@angular-eslint/schematics": "^1.0.0",
     "@angular/animations": "^14.2.0",
     "@angular/common": "^14.2.0",
     "@angular/compiler": "^14.2.0",
@@ -23,7 +26,6 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.2.5",
     "@angular/cli": "~14.2.5",
     "@angular/compiler-cli": "^14.2.0",
     "@types/jasmine": "~4.0.0",
