@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - dev
+# env:
+#   MONGODB_DB_NAME: gha-demo
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -77,9 +79,9 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Publish JS filename
-        id: publish
-        run: find dist/assets/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
+      # - name: Publish JS filename
+      #   id: publish
+      #   run: find dist/assets/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
         # run: find dist/assets/*.js -type f -execdir echo 'script-file={}' >> $GITHUB_OUTPUT ';'
 
       - name: Upload artifacts
@@ -91,6 +93,8 @@ jobs:
           #   dist
           #   package.json
   deploy:
+    env:
+        TESTE_USER_EMAIL: ${{ secrets.TESTE_USER_EMAIL }}
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -106,4 +110,4 @@ jobs:
         run: echo "${{ needs.build.outputs.script-file }}"
 
       - name: Deploy
-        run: echo "Deploying ..."
+        run: echo "Deploying ... ${{ env.TESTE_USER_EMAIL }}"
