@@ -93,6 +93,7 @@ jobs:
           #   dist
           #   package.json
   deploy:
+    environment: testing
     env:
         TESTE_USER_EMAIL: ${{ secrets.TESTE_USER_EMAIL }}
     needs: build
