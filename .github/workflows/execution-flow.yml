@@ -48,7 +48,15 @@ jobs:
         run: npm ci
 
       - name: Run tests
+        id: run-tests
         run: npm run test
+
+      - name: Upload test report
+        if: steps.run-tests.outcome == 'failure'
+        uses: action/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
   build:
     needs: test
     runs-on: ubuntu-latest
