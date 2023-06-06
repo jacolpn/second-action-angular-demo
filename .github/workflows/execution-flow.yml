@@ -108,3 +108,11 @@ jobs:
 
       - name: Deploy
         run: echo "Deploying ... ${{ env.TESTE_USER_EMAIL }}"
+    report:
+      if: failure()
+      runs-on: ubuntu-latest
+      steps:
+        - name: Output information
+          run: |
+            echo "Something went wrong"
+            echo "${{ github }}"
