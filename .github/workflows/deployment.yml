@@ -99,25 +99,26 @@ jobs:
           #   dist
           #   package.json
   deploy:
-    environment: testing
-    env:
-        TESTE_USER_EMAIL: ${{ secrets.TESTE_USER_EMAIL }}
-    needs: build
+    # environment: testing
+    # env:
+    #     TESTE_USER_EMAIL: ${{ secrets.TESTE_USER_EMAIL }}
+    # needs: build
     runs-on: ubuntu-latest
-    steps:
-      - name: Get build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: dist-files
+    uses: ./.github/worflows/reusable.yml
+    # steps:
+    #   - name: Get build artifacts
+    #     uses: actions/download-artifact@v3
+    #     with:
+    #       name: dist-files
 
-      - name: Output contents
-        run: ls
+    #   - name: Output contents
+    #     run: ls
 
-      - name: Output filename
-        run: echo "${{ needs.build.outputs.script-file }}"
+    #   - name: Output filename
+    #     run: echo "${{ needs.build.outputs.script-file }}"
 
-      - name: Deploy
-        run: echo "Deploying ... ${{ env.TESTE_USER_EMAIL }}"
+    #   - name: Deploy
+    #     run: echo "Deploying ... ${{ env.TESTE_USER_EMAIL }}"
   report:
     needs: [lint, deploy]
     if: failure()
