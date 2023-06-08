@@ -6,6 +6,9 @@ on: workflow_call
       required: false
       default: dist
       type: string
+  secrets:
+    some-secret:
+      required: false
 jobs:
   deploy:
     runs-on: ubuntu-latest
