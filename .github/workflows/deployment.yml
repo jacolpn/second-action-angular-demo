@@ -79,7 +79,7 @@ jobs:
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
+        # if: steps.cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Build project
