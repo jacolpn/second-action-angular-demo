@@ -17,9 +17,13 @@ jobs:
           node-version: '16'
 
       - name: Load & cache dependencies
+        id: cache-deps
         uses: ./.github/actions/cached-deps
         with:
             caching: 'true'
+
+      - name: Output information
+        run: echo "Cache used? ${{ steps.cache-deps.outputs.used-cache }}"
 
       - name: Run lint
         run: npm run lint
