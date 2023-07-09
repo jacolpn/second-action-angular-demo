@@ -74,7 +74,6 @@ jobs:
           name: dist-files
           path: dist
   deploy:
-    environment: testing
     env:
         TESTE_USER_EMAIL: ${{ secrets.TESTE_USER_EMAIL }}
     needs: build
@@ -102,3 +101,8 @@ jobs:
         run: |
           echo "Something went wrong"
           echo "${{ toJSON(github) }}"
+  information:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run custom action
+        uses: ./.github/actions/deploy-s3-javascript

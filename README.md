@@ -28,3 +28,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## How to add lint?
 `ng add @angular-eslint/schematics`
+
+
+## Command utilized
+`npm init -y`
+`npm install @actions/core @actions/github @actions/exec`
