@@ -17,7 +17,12 @@ function run() {
   exec.exec(`aws s3 sync ${distFolder} ${s3Uri} --region ${bucketRegion}`);
   // exec.exec('aws s3 sync <local-folder> <s3-bucket>');
 
-  core.notice('Hello from my custom JavaScript Action!');
+  // core.notice('Hello from my custom JavaScript Action!');
+  const websiteUrl = `http://${bucket}.s3-website-${bucketRegion}.amazonaws.com`;
+
+  // ::set-output
+  // website-url: é a prop que ta no output do action.yml (deploy-s3-javascript).
+  core.setOutput('website-url', websiteUrl);
 }
 
 run();
