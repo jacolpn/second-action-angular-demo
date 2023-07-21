@@ -6,6 +6,8 @@ on:
       - dev
 jobs:
   lint:
+    permissions:
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - name: Get code
