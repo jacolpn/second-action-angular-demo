@@ -16,3 +16,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 ## Documents
 - https://docs.github.com/pt
 - https://docs.aws.amazon.com
+- General overview & important concepts: https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions
+- More on Secrets: https://docs.github.com/en/actions/security-guides/encrypted-secrets
+- Using GITHUB_TOKEN: https://docs.github.com/en/actions/security-guides/automatic-token-authentication
+- Advanced - Preventing Fork Pull Requests Attacks: https://securitylab.github.com/research/github-actions-preventing-pwn-requests/
+- Security Hardening with OpenID Connect: https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect
