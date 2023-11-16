@@ -1,0 +1,23 @@
+name: Auto-Update-Branch
+
+on:
+  pull_request:
+    types:
+      - labeled
+
+jobs:
+  auto_update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Check for Update-Branch Label
+      run: |
+        if [[ $(gh pr view ${{ github.event.number }} --json labels.*.name --template '{{ json . }}' | jq -r 'contains(["update-branch"])' ) == "true" ]]; then
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git pull origin main
+
+          git push origin ${{ github.event.pull_request.head.ref }}
+        fi
