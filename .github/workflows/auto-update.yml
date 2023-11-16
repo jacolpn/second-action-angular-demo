@@ -1,23 +1,42 @@
-name: Auto-Update-Branch
+name: Update branch
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     types:
       - labeled
+  check_suite:
+    types:
+      - completed
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
-  auto_update:
+  update-branch:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-
-    - name: Check for Update-Branch Label
-      run: |
-        if [[ $(gh pr view ${{ github.event.number }} --json labels.*.name --template '{{ json . }}' | jq -r 'contains(["update-branch"])' ) == "true" ]]; then
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git pull origin main
-
-          git push origin ${{ github.event.pull_request.head.ref }}
-        fi
+      - uses: lcdsmao/update-branch@v3
+        with:
+          # One of MERGE, SQUASH, REBASE (default: MERGE)
+          autoMergeMethod: SQUASH
+          # Ignore pull requests without these labels
+          requiredLabels: auto-merge
+          # Required at least 2 approves (default: 0)
+          requiredApprovals: 2
+          # Required approvals from all requested reviewers
+          allRequestedReviewersMustApprove: true
+          # Required these status checks success
+          requiredStatusChecks: |
+            build_pr
+            WIP
+          # Optionally set the maximum amount of pull requests to match against (default: 50)
+          fetchMaxPr: 50
+          # Optionally set the maximum amount of pull request checks to fetch (default: 100)
+          fetchMaxPrChecks: 100
+          # Optionally set the maximum amount of pull request labels to fetch (default: 10)
+          fetchMaxPrLabels: 10
+          # The order pr checks should be fetched in. If the required checks are the last ones, consider setting to "last"
+          prChecksFetchOrder: first
