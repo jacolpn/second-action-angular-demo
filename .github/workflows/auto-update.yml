@@ -1,19 +1,35 @@
-name: autoupdate
+name: Auto-Update-Branch
+
 on:
-  push: {}
+  pull_request:
+    types:
+      - labeled
+
 jobs:
-  autoupdate:
-    name: autoupdate
-    runs-on: ubuntu-22.04
+  auto_update:
+    runs-on: ubuntu-latest
+
     steps:
-      - uses: docker://chinthakagodawita/autoupdate-action:v1
-        env:
-          # GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          DRY_RUN: "false"
-          PR_FILTER: "labelled"
-          PR_LABELS: "autoupdate,keep up-to-date,integration"
-          EXCLUDED_LABELS: "dependencies,wontfix"
-          MERGE_MSG: "Branch was auto-updated."
-          RETRY_COUNT: "5"
-          RETRY_SLEEP: "300"
-          MERGE_CONFLICT_ACTION: "fail"
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        # token: ${{ secrets.GH_API_TOKEN }}
+
+    - name: Set up Git
+      run: |
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+
+    - name: Check for Update-Branch Label
+      run: |
+        # Verifica se a PR tem o label 'update-branch'
+        if [[ $(gh pr view ${{ github.event.number }} --json labels.*.name --template '{{ json . }}' | jq -r 'contains(["update-branch"])' ) == "true" ]]; then
+          git pull origin main  # ou substitua pela branch que você deseja atualizar
+          # Adicione outros comandos necessários para a atualização
+
+          # Exemplo: Se você deseja forçar um push para a branch atualizada
+          git push origin ${{ github.event.pull_request.head.ref }} --force
+        fi
+      # env:
+        # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
