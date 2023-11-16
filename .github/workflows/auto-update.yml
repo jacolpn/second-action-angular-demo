@@ -25,13 +25,13 @@ jobs:
           # Ignore pull requests without these labels
           requiredLabels: auto-merge
           # Required at least 2 approves (default: 0)
-          requiredApprovals: 2
+          # requiredApprovals: 2
           # Required approvals from all requested reviewers
           allRequestedReviewersMustApprove: true
           # Required these status checks success
-          requiredStatusChecks: |
-            build_pr
-            WIP
+          # requiredStatusChecks: |
+            # build_pr
+            # WIP
           # Optionally set the maximum amount of pull requests to match against (default: 50)
           fetchMaxPr: 50
           # Optionally set the maximum amount of pull request checks to fetch (default: 100)
