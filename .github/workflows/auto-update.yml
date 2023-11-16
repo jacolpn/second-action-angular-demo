@@ -1,42 +1,19 @@
-name: Update branch
-
+name: autoupdate
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types:
-      - labeled
-  check_suite:
-    types:
-      - completed
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
+  push: {}
 jobs:
-  update-branch:
-    runs-on: ubuntu-latest
+  autoupdate:
+    name: autoupdate
+    runs-on: ubuntu-22.04
     steps:
-      - uses: lcdsmao/update-branch@v3
-        with:
-          # One of MERGE, SQUASH, REBASE (default: MERGE)
-          autoMergeMethod: SQUASH
-          # Ignore pull requests without these labels
-          requiredLabels: auto-merge
-          # Required at least 2 approves (default: 0)
-          # requiredApprovals: 2
-          # Required approvals from all requested reviewers
-          allRequestedReviewersMustApprove: true
-          # Required these status checks success
-          # requiredStatusChecks: |
-            # build_pr
-            # WIP
-          # Optionally set the maximum amount of pull requests to match against (default: 50)
-          fetchMaxPr: 50
-          # Optionally set the maximum amount of pull request checks to fetch (default: 100)
-          fetchMaxPrChecks: 100
-          # Optionally set the maximum amount of pull request labels to fetch (default: 10)
-          fetchMaxPrLabels: 10
-          # The order pr checks should be fetched in. If the required checks are the last ones, consider setting to "last"
-          prChecksFetchOrder: first
+      - uses: docker://chinthakagodawita/autoupdate-action:v1
+        env:
+          # GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          DRY_RUN: "false"
+          PR_FILTER: "labelled"
+          PR_LABELS: "autoupdate,keep up-to-date,integration"
+          EXCLUDED_LABELS: "dependencies,wontfix"
+          MERGE_MSG: "Branch was auto-updated."
+          RETRY_COUNT: "5"
+          RETRY_SLEEP: "300"
+          MERGE_CONFLICT_ACTION: "fail"
