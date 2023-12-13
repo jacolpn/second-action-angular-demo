@@ -16,6 +16,9 @@ jobs:
     - name: Verificar se há atualizações
       if: ${{ contains(github.event.pull_request.labels.*.name, 'autoupdate') }}
       run: |
+        # Certificar-se de que estamos na branch da PR
+        git checkout ${{ github.event.pull_request.head.ref }}
+
         git fetch origin
         UPSTREAM=$(git rev-parse '@{upstream}')
         LOCAL=$(git rev-parse '@')
