@@ -114,8 +114,9 @@ jobs:
   #     - name: Output information
   #       run: |
   #         echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
+  # needs: [lint, deploy]
   report:
-    needs: [lint, deploy]
+    needs: [test]
     if: failure()
     runs-on: ubuntu-latest
     steps:
