@@ -75,47 +75,48 @@ jobs:
         with:
           name: dist-files
           path: dist
-  deploy:
-    permissions:
-      id-token: write
-      contents: read
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
+  # deploy:
+  #   permissions:
+  #     id-token: write
+  #     contents: read
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Get code
+  #       uses: actions/checkout@v3
 
-      - name: Get build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: dist-files
-          path: ./dist
+  #     - name: Get build artifacts
+  #       uses: actions/download-artifact@v3
+  #       with:
+  #         name: dist-files
+  #         path: ./dist
 
-      - name: Output contents
-        run: ls
+  #     - name: Output contents
+  #       run: ls
 
-      - name: Output filename
-        run: echo "${{ needs.build.outputs.script-file }}"
+  #     - name: Output filename
+  #       run: echo "${{ needs.build.outputs.script-file }}"
 
-      - name: Get AWS permissions
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          role-to-assume: arn:aws:iam::552684821315:role/GutHubDemo1
-          aws-region: us-east-2
+  #     - name: Get AWS permissions
+  #       uses: aws-actions/configure-aws-credentials@v2
+  #       with:
+  #         role-to-assume: arn:aws:iam::552684821315:role/GutHubDemo1
+  #         aws-region: us-east-2
 
-      - name: Deploy
-        id: deploy
-        uses: ./.github/actions/deploy-s3-javascript
-        with:
-            bucket: gha-security-hosting-jacks
-            dist-folder: ./dist
-            bucket-region: us-east-2
+  #     - name: Deploy
+  #       id: deploy
+  #       uses: ./.github/actions/deploy-s3-javascript
+  #       with:
+  #           bucket: gha-security-hosting-jacks
+  #           dist-folder: ./dist
+  #           bucket-region: us-east-2
 
-      - name: Output information
-        run: |
-          echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
+  #     - name: Output information
+  #       run: |
+  #         echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
+  # needs: [lint, deploy]
   report:
-    needs: [lint, deploy]
+    needs: [lint]
     if: failure()
     runs-on: ubuntu-latest
     steps:
