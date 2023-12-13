@@ -1,0 +1,23 @@
+name: Seu Fluxo de Trabalho - Autoupdate
+
+on:
+  pull_request:
+    types:
+      - labeled
+jobs:
+  seu-job:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Executar quando a label 'autoupdate' é adicionada
+      run: |
+        # Verificar se a label desejada está presente
+        if [[ $(gh pr view ${{ github.event.number }} --json labels -q .[].name) == *"autoupdate"* ]]; then
+          echo "Label 'autoupdate' adicionada à PR"
+          # Coloque aqui os comandos ou scripts que você deseja executar
+        else
+          echo "Label 'autoupdate' não está presente na PR"
+        fi
