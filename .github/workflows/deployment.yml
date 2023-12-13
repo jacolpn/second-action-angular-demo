@@ -48,33 +48,33 @@ jobs:
 
       - name: Run tests
         run: npm run test
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    outputs:
-      script-file: ${{ steps.publish.outputs.script-file }}
-    steps:
-      - name: Get code
-        uses: actions/checkout@v3
+  # build:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     script-file: ${{ steps.publish.outputs.script-file }}
+  #   steps:
+  #     - name: Get code
+  #       uses: actions/checkout@v3
 
-      - name: Install NodeJS
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+  #     - name: Install NodeJS
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: '16'
 
-      - name: Load & cache dependencies
-        uses: ./.github/actions/cached-deps
-        with:
-          caching: 'true'
+  #     - name: Load & cache dependencies
+  #       uses: ./.github/actions/cached-deps
+  #       with:
+  #         caching: 'true'
 
-      - name: Build project
-        run: npm run build
+  #     - name: Build project
+  #       run: npm run build
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist-files
-          path: dist
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v3
+  #       with:
+  #         name: dist-files
+  #         path: dist
   # deploy:
   #   permissions:
   #     id-token: write
@@ -114,9 +114,8 @@ jobs:
   #     - name: Output information
   #       run: |
   #         echo "Live URL: ${{ steps.deploy.outputs.website-url }}"
-  # needs: [lint, deploy]
   report:
-    needs: [lint]
+    needs: [lint, deploy]
     if: failure()
     runs-on: ubuntu-latest
     steps:
