@@ -10,12 +10,12 @@ on:
 jobs:
   verificar-atualizacao:
     runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'autoupdate') }}
 
     steps:
     - name: Checkout da Branch
       uses: actions/checkout@v3
 
     - name: Verificar se há atualizações
-      if: ${{ contains(github.event.pull_request.labels.*.name, 'autoupdate') }}
       run: |
         echo "Está com o label 'autoupdate'."
