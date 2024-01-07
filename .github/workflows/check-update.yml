@@ -4,9 +4,12 @@ on:
   pull_request:
     types:
       - labeled
+  schedule:
+    - cron: '0 * * * *' # Executar a cada hora
 
 jobs:
   verificar-atualizacao:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'autoupdate') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -14,18 +17,8 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Verificar se há atualizações
-      if: ${{ contains(github.event.pull_request.labels.*.name, 'autoupdate') }}
       run: |
-        # Certificar-se de que estamos na branch da PR
-        git checkout ${{ github.event.pull_request.head.ref }}
-
+        echo "A branch atual é: $(git rev-parse --abbrev-ref HEAD)"
+        git config pull.rebase true
         git fetch origin
-        UPSTREAM=$(git rev-parse '@{upstream}')
-        LOCAL=$(git rev-parse '@')
-
-        if [ $UPSTREAM != $LOCAL ]; then
-          echo "A branch precisa ser atualizada."
-          # Coloque aqui os comandos ou scripts para realizar a atualização
-        else
-          echo "A branch está atualizada."
-        fi
+        git pull origin main

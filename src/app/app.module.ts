@@ -15,4 +15,5 @@ import { AppComponent } from './app.component';
 })
 export class AppModule {
   title = 'second-action-angular-demo';
+  test = 'test';
 }
