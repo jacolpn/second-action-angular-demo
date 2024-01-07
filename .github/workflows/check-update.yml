@@ -21,8 +21,8 @@ jobs:
         echo "A branch atual é: $(git rev-parse --abbrev-ref HEAD)"
         git fetch origin
 
-        # Mesclar a branch remota (main) com a branch local usando a estratégia 'ours'
-        git merge -s ours origin/main -m "Merge branch 'main' into $(git rev-parse --abbrev-ref HEAD)"
+        # Resetar as alterações locais para desfazer conflitos
+        git reset --hard origin/main
 
-        # Forçar a atualização da branch remota com as alterações mescladas
-        git push origin HEAD
+        # Forçar a atualização da branch local para a branch remota
+        git push --force origin HEAD
