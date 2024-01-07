@@ -4,20 +4,21 @@ on:
     types:
       - labeled
   schedule:
-    - cron: '0 * * * *' #
+    - cron: '0 * * * *' # Executar a cada hora
 jobs:
   autoupdate:
     name: autoupdate
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-18.04
     steps:
-      - uses: docker://chinthakagodawita/autoupdate-action:v1
+      - uses: docker://chinthakagodawita/autoupdate-action-unstable:v1
         env:
           GITHUB_TOKEN: "${{ secrets.GH_API_TOKEN }}"
-          DRY_RUN: "false"
           PR_FILTER: "labelled"
-          PR_LABELS: "autoupdate,keep up-to-date,integration"
-          EXCLUDED_LABELS: "dependencies,wontfix"
-          MERGE_MSG: "Branch was auto-updated."
-          RETRY_COUNT: "5"
-          RETRY_SLEEP: "300"
-          MERGE_CONFLICT_ACTION: "fail"
+          PR_LABELS: "autoupdate"
+          PR_READY_STATE: "ready_for_review"
+
+      - run: echo 'Merge conflicts found!'
+        if: ${{ steps.autoupdate.outputs.conflicted }}
+
+      - run: echo 'No merge conflicts'
+        if: ${{ !steps.autoupdate.outputs.conflicted }}
