@@ -9,8 +9,8 @@ on:
 
 jobs:
   verificar-atualizacao:
-    runs-on: ubuntu-latest
     if: ${{ contains(github.event.pull_request.labels.*.name, 'autoupdate') }}
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout da Branch
