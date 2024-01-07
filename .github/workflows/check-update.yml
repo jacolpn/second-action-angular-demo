@@ -18,4 +18,4 @@ jobs:
 
     - name: Verificar se há atualizações
       run: |
-        echo "Está com o label 'autoupdate'."
+        echo "A branch atual é: $(git rev-parse --abbrev-ref HEAD)"
