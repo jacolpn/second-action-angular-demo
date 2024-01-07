@@ -19,6 +19,8 @@ jobs:
     - name: Verificar se há atualizações
       run: |
         echo "A branch atual é: $(git rev-parse --abbrev-ref HEAD)"
-        git config pull.rebase true
         git fetch origin
-        git pull origin main
+
+        # Configurar a estratégia de resolução de conflitos para 'ours'
+        git pull --rebase -X ours origin main
+
