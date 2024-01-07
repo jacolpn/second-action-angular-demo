@@ -1,10 +1,6 @@
 name: autoupdate
 on:
-  pull_request:
-    types:
-      - labeled
-  schedule:
-    - cron: '0 * * * *' # Executar a cada hora
+  push: {}
 jobs:
   autoupdate:
     name: autoupdate
