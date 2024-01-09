@@ -25,21 +25,21 @@ jobs:
         git merge origin/${{ github.event.pull_request.head.ref }}
         git push origin ${{ github.event.pull_request.head.ref }}
 
-  remove-label:
-    needs: [update-branch]
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Remove autoupdate label
-        run: |
-          # Remove o label de autoupdate.
-          # https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28
-          curl -L -X DELETE \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${{ secrets.GH_API_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/autoupdate
+  # remove-label:
+  #   needs: [update-branch]
+  #   if: failure()
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Remove autoupdate label
+  #       run: |
+  #         # Remove o label de autoupdate.
+  #         # https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28
+  #         curl -L -X DELETE \
+  #           -H "Accept: application/vnd.github+json" \
+  #           -H "Authorization: Bearer ${{ secrets.GH_API_TOKEN }}" \
+  #           https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/autoupdate
 
-        - name: Output information
-          run: |
-            echo "Something went wrong"
-            echo "${{ toJSON(github) }}"
+  #       - name: Output information
+  #         run: |
+  #           echo "Something went wrong"
+  #           echo "${{ toJSON(github) }}"
