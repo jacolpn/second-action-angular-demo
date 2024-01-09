@@ -18,3 +18,12 @@ jobs:
 
       - run: echo 'No merge conflicts'
         if: ${{ !steps.autoupdate.outputs.conflicted }}
+
+
+# git fetch origin
+
+# # Resetar as alterações locais para desfazer conflitos
+# git reset --hard origin/main
+
+# # Forçar a atualização da branch local para a branch remota
+# git push --force origin HEAD

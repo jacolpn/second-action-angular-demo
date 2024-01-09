@@ -18,11 +18,12 @@ jobs:
 
     - name: Verificar se há atualizações
       run: |
-        echo "A branch atual é: $(git rev-parse --abbrev-ref HEAD)"
-        git fetch origin
+        echo "Pull request ééé: ${{github.event.pull_request}}"
 
-        # Resetar as alterações locais para desfazer conflitos
-        git reset --hard origin/main
-
-        # Forçar a atualização da branch local para a branch remota
-        git push --force origin HEAD
+        curl --location --request POST 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.pr_number }}/labels' \
+          --header 'Accept: application/vnd.github.v3+json' \
+          --header 'Authorization: Bearer ${{ secrets.GH_API_TOKEN }}' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "labels": ["enhancement"]
+          }'
