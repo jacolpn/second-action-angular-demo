@@ -21,7 +21,7 @@ jobs:
           echo "Pull request head ééé: {{ toJSON(github.event.pull_request.head) }}"
           git fetch origin
           git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/${{ github.event.pull_request.head.ref }}
+          git merge origin/main
           git push origin ${{ github.event.pull_request.head.ref }}
         env:
           GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN }}
