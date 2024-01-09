@@ -21,3 +21,11 @@ jobs:
         else
           echo "Label 'autoupdate' não está presente na PR"
         fi
+
+
+        # curl --location --request POST \
+        #   --url 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels' \
+        #   --H 'Accept: application/vnd.github.v3+json' \
+        #   --H 'Authorization: Bearer ${{ secrets.GH_API_TOKEN }}' \
+        #   --H 'Content-Type: application/json' \
+        #   --d '{ "labels": ["enhancement"] }'
