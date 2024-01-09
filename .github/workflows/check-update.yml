@@ -20,6 +20,8 @@ jobs:
       run: |
         echo "Pull request ééé: ${{ toJSON(github.event.pull_request.number) }}"
 
+        # Remove o label de autoupdate.
+        # https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28
         curl -L -X DELETE \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GH_API_TOKEN }}" \
