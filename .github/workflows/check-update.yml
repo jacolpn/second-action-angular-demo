@@ -16,6 +16,10 @@ jobs:
       - name: Checkout da Branch
         uses: actions/checkout@v3
 
+      - name: Setup git user to "🤖 github-actions bot"
+        shell: bash
+        run: git config user.email "<>" && git config user.name "🤖 github-actions[bot]"
+
       - name: Update branch
         run: |
           echo "Pull request head ééé: {{ toJSON(github.event.pull_request.head) }}"
