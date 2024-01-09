@@ -13,16 +13,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout da Branch
-      uses: actions/checkout@v3
+      - name: Checkout da Branch
+        uses: actions/checkout@v3
 
-    - name: Update branch
-      run: |
-        echo "Pull request head ééé: ${{ toJSON(github.event.pull_request.head) }}"
+      - name: Update branch
+        run: |
+          echo "Pull request head ééé: ${{ toJSON(github.event.pull_request.head) }}"
 
-        # Remove o label de autoupdate.
-        # https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28
-        # curl -L -X DELETE \
-        #   -H "Accept: application/vnd.github+json" \
-        #   -H "Authorization: Bearer ${{ secrets.GH_API_TOKEN }}" \
-        #   https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/autoupdate
+  remove-label:
+    needs: [update-branch]
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove autoupdate label
+        run: |
+          # Remove o label de autoupdate.
+          # https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28
+          curl -L -X DELETE \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GH_API_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/autoupdate
+
+      - name: Output information
+        run: |
+          echo "Something went wrong"
+          echo "${{ toJSON(github) }}"
