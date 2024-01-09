@@ -24,9 +24,13 @@ jobs:
         run: |
           echo "Pull request head ééé: {{ toJSON(github.event.pull_request.head) }}"
           git fetch origin
+          echo "one -----------------"
           git checkout ${{ github.event.pull_request.head.ref }}
-          git pull origin main
+          echo "two -----------------"
+          git pull --rebase origin main
+          echo "three -----------------"
           git push origin ${{ github.event.pull_request.head.ref }}
+          echo "four -----------------"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
