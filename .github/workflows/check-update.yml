@@ -24,7 +24,9 @@ jobs:
         git checkout ${{ github.event.pull_request.head.ref }}
         git merge origin/${{ github.event.pull_request.head.ref }}
         git push origin ${{ github.event.pull_request.head.ref }}
+
   remove-label:
+    needs: [update-branch]
     if: failure()
     runs-on: ubuntu-latest
     steps:
