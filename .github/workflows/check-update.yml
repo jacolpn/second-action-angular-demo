@@ -20,22 +20,8 @@ jobs:
       run: |
         echo "Pull request ééé: ${{ toJSON(github.event.pull_request.number) }}"
 
-        # curl --location --request POST 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels' \
-        #   --header 'Accept: application/vnd.github.v3+json' \
-        #   --header 'Authorization: Bearer ${{ secrets.GH_API_TOKEN }}' \
-        #   --header 'Content-Type: application/json' \
-        #   --data-raw '{
-        #       "labels": ["enhancement"]
-        #   }'
-
         curl -L \
           -X DELETE \
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ secrets.GH_API_TOKEN }}" \
           https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/autoupdate
-
-        # curl -X DELETE \
-        #   --url https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.number }}/labels/autoupdate \
-        #   --header 'Accept: application/vnd.github.v3+json' \
-        #   -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-        #   --fail
