@@ -18,7 +18,7 @@ jobs:
 
       - name: Setup git user to "🤖 github-actions bot"
         shell: bash
-        run: git config user.email "<>" && git config user.name "🤖 github-actions[bot]"
+        run: git config user.email "jacolpn@outlook.com" && git config user.name "jacolpn"
 
       - name: Update branch
         run: |
