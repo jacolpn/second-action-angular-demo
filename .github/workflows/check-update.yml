@@ -18,7 +18,7 @@ jobs:
 
     - name: Verificar se há atualizações
       run: |
-        echo "Pull request ééé: ${{github.event.pull_request}}"
+        echo "Pull request ééé: ${{ toJSON(github.event.pull_request) }}"
 
         curl --location --request POST 'https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.pull_request.pr_number }}/labels' \
           --header 'Accept: application/vnd.github.v3+json' \
