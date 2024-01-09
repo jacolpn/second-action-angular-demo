@@ -19,6 +19,10 @@ jobs:
       - name: Update branch
         run: |
           echo "Pull request head ééé: ${{ toJSON(github.event.pull_request.head) }}"
+          git fetch origin
+          git checkout ${{ github.event.pull_request.head.ref }}
+          git merge origin/${{ github.event.pull_request.head.ref }}
+          git push origin ${{ github.event.pull_request.head.ref }}
 
   remove-label:
     needs: [update-branch]
