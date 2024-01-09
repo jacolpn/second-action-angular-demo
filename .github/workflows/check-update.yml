@@ -18,7 +18,7 @@ jobs:
 
       - name: Setup git user to "🤖 github-actions bot"
         shell: bash
-        run: git config user.email "jacolpn@outlook.com" && git config user.name "jacolpn"
+        run: git config user.email "<>" && git config user.name "🤖 github-actions[bot]"
 
       - name: Update branch
         run: |
@@ -31,8 +31,6 @@ jobs:
           echo "three -----------------"
           git push origin ${{ github.event.pull_request.head.ref }}
           echo "four -----------------"
-        env:
-          GH_API_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
   remove-label:
     needs: [update-branch]
